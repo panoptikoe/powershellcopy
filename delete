@@ -1,0 +1,27 @@
+Clear
+for($ix=1;$ix -lt 35;$ix++) {
+    $nr    = "00$ix"
+    $nr    = $nr.Substring($nr.Length - 2)
+    $pc    = "EXWS-$nr"
+    $us    = "EXUSR-$nr"
+    $dtp   = "$pc\C$\Users\$us\desktop"
+    $dox   = "$pc\C$\Users\$us\documents"
+    $pdtp  = "$pc\C$\Users\Public\desktop"
+    $pdox  = "$pc\C$\Users\Public\documents"
+    $alive = Test-Connection -BufferSize 32 -Count 1 -ComputerName $pc -Quiet
+    if($alive -eq $true) {
+        ###   Bestanden op bureaublad en documentenmap van gebruiker verwijderen
+        Remove-Item "$dtp\*.*" -Force -Recurse -ErrorAction Continue
+        Remove-Item "$dox\*.*" -Force -Recurse -ErrorAction Continue
+        Get-ChildItem -Path "$dtp" -filter * | remove-item -Force -Recurse
+        ###   Bureaublad en documentenmap Alle gebruikers leegmaken
+        Remove-Item "$pdtp\*.*" -Force -Recurse -ErrorAction Continue
+        Remove-Item "$pdox\*.*" -Force -Recurse -ErrorAction Continue
+        Get-ChildItem -Path "$pdtp" -filter * | remove-item -Force -Recurse
+        ###    Melden dat bestanden zijn verwijderd
+        Write-Host  "Bestanden op '$pc' zijn verwijderd." -ForegroundColor Green
+    } else {
+        Write-Host $pc.toupper() "is momenteel niet bereikbaar" -ForegroundColor Red
+    }
+}
+ 
