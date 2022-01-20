@@ -1,0 +1,22 @@
+$src = "$HOME\Desktop\Examen"
+if (Test-Path -Path $src) {
+    for($ix=1;$ix -lt 35;$ix++) {
+        $nr = "00$ix"
+        $nr = $nr.Substring($nr.Length - 2)
+        $pc = "EXWS-$nr"
+        $dtp = "$pc\desktop\*.*"
+        $dox = "$pc\documents\*.*"
+        $alive = Test-Connection -BufferSize 32 -Count 1 -ComputerName $pc -Quiet
+        if($alive -eq $true) {
+            ###   Bestanden naar bureaublad of documentenmap
+            foreach($bst in $bestanden) {
+                write-host "Kopieer $bst  naar  \\$pc\C$\Users\EXUSR-$nr\desktop"
+                Copy-Item $bst "\\$pc\C$\Users\EXUSR-$nr\desktop" -Recurse -Force
+            }
+        } else {
+            Write-Host $pc.toupper() "is momenteel niet bereikbaar" -ForegroundColor Red
+        }
+    }
+} else {
+    write-host "Map '$src' bestaat niet!" -ForegroundColor Red
+}
