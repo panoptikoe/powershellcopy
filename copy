@@ -8,15 +8,15 @@ if (Test-Path -Path $src) {
         $dox = "$pc\documents\*.*"
         $alive = Test-Connection -BufferSize 32 -Count 1 -ComputerName $pc -Quiet
         if($alive -eq $true) {
-            ###   Bestanden naar bureaublad of documentenmap
+            ###  Files to desktop or slashdocuments
             foreach($bst in $bestanden) {
                 write-host "Kopieer $bst  naar  \\$pc\C$\Users\EXUSR-$nr\desktop"
                 Copy-Item $bst "\\$pc\C$\Users\EXUSR-$nr\desktop" -Recurse -Force
             }
         } else {
-            Write-Host $pc.toupper() "is momenteel niet bereikbaar" -ForegroundColor Red
+            Write-Host $pc.toupper() "cant reach host! r" -ForegroundColor Red
         }
     }
 } else {
-    write-host "Map '$src' bestaat niet!" -ForegroundColor Red
+    write-host "Map '$src' doesnt exist" -ForegroundColor Red
 }
