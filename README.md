@@ -1,2 +1,2 @@
 # powershellcopy
-script for copying files onto laptops/computers in domain
+scripts for copying files onto laptops/computers in domain
