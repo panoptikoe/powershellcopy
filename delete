@@ -10,7 +10,7 @@ for($ix=1;$ix -lt 35;$ix++) {
     $pdox  = "$pc\C$\Users\Public\documents"
     $alive = Test-Connection -BufferSize 32 -Count 1 -ComputerName $pc -Quiet
     if($alive -eq $true) {
-        ###   Bestanden op bureaublad en documentenmap van gebruiker verwijderen
+        ###   Delete files on Desktop and Documents
         Remove-Item "$dtp\*.*" -Force -Recurse -ErrorAction Continue
         Remove-Item "$dox\*.*" -Force -Recurse -ErrorAction Continue
         Get-ChildItem -Path "$dtp" -filter * | remove-item -Force -Recurse
@@ -18,10 +18,10 @@ for($ix=1;$ix -lt 35;$ix++) {
         Remove-Item "$pdtp\*.*" -Force -Recurse -ErrorAction Continue
         Remove-Item "$pdox\*.*" -Force -Recurse -ErrorAction Continue
         Get-ChildItem -Path "$pdtp" -filter * | remove-item -Force -Recurse
-        ###    Melden dat bestanden zijn verwijderd
-        Write-Host  "Bestanden op '$pc' zijn verwijderd." -ForegroundColor Green
+        ###    Notification that deletion is complete
+        Write-Host  "Files on '$pc' are deleted." -ForegroundColor Green
     } else {
-        Write-Host $pc.toupper() "is momenteel niet bereikbaar" -ForegroundColor Red
+        Write-Host $pc.toupper() "cant be reached at the moment" -ForegroundColor Red
     }
 }
  
